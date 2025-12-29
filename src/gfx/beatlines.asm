@@ -181,7 +181,9 @@ setup_new_frame
 
     ; reset bea
     lda animation_timer
-    and #%00001111
+    and #%00011110
+    clc
+    ror
     tax
     lda bea_animation_xs, x
     ldy bea_animation_ys, x
