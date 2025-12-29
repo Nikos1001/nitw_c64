@@ -153,8 +153,8 @@ gregg_animation_ys
 setup_new_frame
     ; calculate scroll offset
     lda scroll_val
-    clc
-    adc #4
+    sec
+    sbc #4
     and #%00001111
 
     ; reset beatline sprites to top of note area
