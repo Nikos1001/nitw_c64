@@ -98,11 +98,7 @@ frame_end_irq
 
     jsr animate_note_chars
 
-    ; setup frame begin irq for next frame
-    ; this stabilizes the raster timing for rendering the beatlines
-    lda #0
-    sta raster_line
-    set_irq_vector frame_begin_irq
+    jsr setup_new_frame
 
     jmp irq_exit
 

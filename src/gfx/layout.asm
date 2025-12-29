@@ -18,6 +18,9 @@ string3_x = string_x(3)
 
 lyric_line0_y = 21
 
+top_sprite_y = sprite_min_y + 4 * 8
+btm_sprite_y = sprite_min_y + 11 * 8 - 4
+
 setup_screen_layout
 
     ; make screen black 
@@ -133,56 +136,117 @@ setup_screen_layout
     lda #%11111111
     sta sprite_enable
     sta sprite_x_expansions
+    lda #%00111111
     sta sprite_y_expansions
 
-    lda #(sprite_data / 64)
+    lda #%11000000
+    sta sprite_priority
+
+    lda #bea_face
     sta sprite_data_ptr(0) 
-    sta sprite_data_ptr(2) 
-    sta sprite_data_ptr(4) 
-    sta sprite_data_ptr(6) 
-    lda #(sprite_data_2 / 64)
+
+    lda #bea_pupil
     sta sprite_data_ptr(1) 
+
+    lda #bea_details
+    sta sprite_data_ptr(2) 
+
+    lda #gregg_face
     sta sprite_data_ptr(3) 
+
+    lda #gregg_teeth
+    sta sprite_data_ptr(4) 
+
+    lda #gregg_nose_eye
     sta sprite_data_ptr(5) 
+
+    lda #beatline_sprite_data
+    sta sprite_data_ptr(6) 
     sta sprite_data_ptr(7)
 
-    lda #(sprite_min_x + 4 * 8)
+    lda #(sprite_min_x + 4 * 8 + 2) ; left x
     sta sprite_x(0)
     sta sprite_x(1)
     sta sprite_x(2) 
+
+    lda #angus_min_x ; right x
     sta sprite_x(3) 
+    sta sprite_x(4)
+    sta sprite_x(5)
 
-    lda #(sprite_min_x + 28 * 8 + 4 - 256)
-    sta sprite_x(4) 
-    sta sprite_x(5) 
-    sta sprite_x(6) 
-    sta sprite_x(7)
-
-    lda #%11110000
+    lda #%00000000
     sta sprite_x_msbs
 
-    lda #(sprite_min_y + 4 * 8 - 4)
+    ; beatline sprite x-vals 
+    lda #(sprite_min_x + note_area_min_x * 8 - 7)
+    sta sprite_x(6) 
+    lda #(sprite_min_x + note_area_min_x * 8 + 24 * 2 - 7)
+    sta sprite_x(7)
+
+    ; top y-val
+    lda #top_sprite_y
     sta sprite_y(0)
-    sta sprite_y(4)
-    ; sta sprite_y(1)
-    ; sta sprite_y(5)
-
-    lda #(sprite_min_y + 12 * 8 - 4)
+    sta sprite_y(1)
     sta sprite_y(2)
-    sta sprite_y(6)
-    ; sta sprite_y(3)
-    ; sta sprite_y(7)
+    sta sprite_y(3)
+    sta sprite_y(4)
+    sta sprite_y(5)
 
-    lda #color_dark_blue
+    ; beatline sprite y-vals
+    lda #(sprite_min_y + note_area_min_y * 8)
+    sta sprite_y(6)
+    sta sprite_y(7)
+
+    lda #color_light_blue
     sta sprite_color(0)
-    sta sprite_color(2)
-    sta sprite_color(4)
-    sta sprite_color(6)
 
     lda #color_red
     sta sprite_color(1)
+
+    lda #color_black
+    sta sprite_color(2)
+
+    lda #color_orange
     sta sprite_color(3)
+
+    lda #color_white
+    sta sprite_color(4)
+
+    lda #color_black
     sta sprite_color(5)
+
+    ; beatline sprite colors
+    lda #color_dark_grey
+    sta sprite_color(6)
     sta sprite_color(7)
+
+    ; character backgrounds
+    lda #color_yellow
+    .for i in range(4, 12) ; this is where code size comes to die
+        .for j in range(4, 10)
+            sta screen_color_addr(i, j)
+        .endfor
+    .endfor
+
+    lda #color_light_red
+    .for i in range(4, 12)
+        .for j in range(10, 16)
+            sta screen_color_addr(i, j)
+        .endfor
+    .endfor
+
+    lda #color_light_red
+    .for i in range(28, 36)
+        .for j in range(4, 10)
+            sta screen_color_addr(i, j)
+        .endfor
+    .endfor
+
+    lda #color_cyan
+    .for i in range(28, 36)
+        .for j in range(10, 16)
+            sta screen_color_addr(i, j)
+        .endfor
+    .endfor
 
     rts

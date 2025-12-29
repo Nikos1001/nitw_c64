@@ -18,6 +18,7 @@ sprite_x .sfunction idx, sprite_coords + 2 * idx
 sprite_y .sfunction idx, sprite_coords + 2 * idx + 1
 
 sprite_enable = $d015
+sprite_priority = $d01b
 sprite_x_expansions = $d01d
 sprite_y_expansions = $d017
 
