@@ -133,7 +133,12 @@ read_keyboard
             lda #56
             sta string0_anim_frame + i
 
-            beq skip_key_pressed
+            tya
+            bne skip_no_note
+                ldy #note_Db0
+                lda #28
+                sta wrong_note_stun_timer
+            skip_no_note
 
             lda pitch_lo_byte, y            
             sta sid_v1_freq_lo
